@@ -1,0 +1,220 @@
+/* 棋盘相关样式 */
+
+/* 棋盘背景纹理 */
+.chess-board {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
+}
+
+/* 棋盘边框装饰 */
+.board-grid::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: linear-gradient(45deg, #8B4513, #D2691E, #8B4513);
+  border-radius: 8px;
+  z-index: -1;
+}
+
+/* 棋盘阴影效果 */
+.board-grid {
+  box-shadow: 
+    inset 0 0 20px rgba(139, 69, 19, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    0 0 60px rgba(139, 69, 19, 0.1);
+}
+
+/* 棋子悬浮效果 */
+.chess-stone {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chess-stone:hover {
+  filter: drop-shadow(3px 3px 8px rgba(0, 0, 0, 0.4));
+  transform: scale(1.05) translateY(-2px);
+}
+
+/* 棋子材质效果 */
+.chess-stone--black .stone-body {
+  background: 
+    radial-gradient(circle at 30% 30%, #666 0%, #333 50%, #1a1a1a 100%),
+    linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+  box-shadow: 
+    inset 0 0 10px rgba(0, 0, 0, 0.5),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.chess-stone--white .stone-body {
+  background: 
+    radial-gradient(circle at 30% 30%, #fff 0%, #f0f0f0 50%, #e0e0e0 100%),
+    linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+  box-shadow: 
+    inset 0 0 8px rgba(0, 0, 0, 0.1),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+/* 获胜线条动画 */
+.win-line {
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #4CAF50 20%, 
+    #66BB6A 50%, 
+    #4CAF50 80%, 
+    transparent 100%
+  );
+  box-shadow: 
+    0 0 10px #4CAF50,
+    0 0 20px rgba(76, 175, 80, 0.6),
+    0 0 30px rgba(76, 175, 80, 0.4);
+  animation: winLineGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes winLineGlow {
+  0% {
+    box-shadow: 
+      0 0 10px #4CAF50,
+      0 0 20px rgba(76, 175, 80, 0.6),
+      0 0 30px rgba(76, 175, 80, 0.4);
+  }
+  100% {
+    box-shadow: 
+      0 0 15px #66BB6A,
+      0 0 30px rgba(76, 175, 80, 0.8),
+      0 0 45px rgba(76, 175, 80, 0.6);
+  }
+}
+
+/* 星位点动画 */
+.star-point {
+  transition: all 0.3s ease;
+}
+
+.chess-cell:hover .star-point {
+  transform: translate(-50%, -50%) scale(1.2);
+  background-color: #CD853F;
+}
+
+/* 网格线高光效果 */
+.grid-line {
+  transition: background-color 0.3s ease;
+}
+
+.chess-cell:hover .grid-line {
+  background-color: #CD853F;
+}
+
+/* 响应式棋盘大小 */
+@media (max-width: 1200px) {
+  .board-grid {
+    max-width: 500px;
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .board-grid {
+    max-width: 400px;
+    max-height: 400px;
+  }
+  
+  .chess-stone {
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+  }
+  
+  .chess-stone:hover {
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.4));
+    transform: scale(1.03) translateY(-1px);
+  }
+}
+
+@media (max-width: 480px) {
+  .board-grid {
+    max-width: 300px;
+    max-height: 300px;
+  }
+  
+  .star-point {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* 棋盘加载动画 */
+.board-grid.board-loading {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: boardFadeIn 0.8s ease-out forwards;
+}
+
+@keyframes boardFadeIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 棋子落下动画增强 */
+@keyframes stoneDrop {
+  0% {
+    transform: translateY(-100px) scale(0.5) rotate(180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(10px) scale(1.1) rotate(90deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-5px) scale(0.95) rotate(45deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* 最后落子标记闪烁 */
+@keyframes lastMoveMarker {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.8;
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* 获胜棋子高亮动画 */
+.chess-cell--winning .chess-stone {
+  animation: winningStone 1.5s ease-in-out infinite;
+}
+
+@keyframes winningStone {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3)) brightness(1);
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(4px 4px 8px rgba(76, 175, 80, 0.6)) brightness(1.2);
+  }
+}
