@@ -1,0 +1,409 @@
+/* 动画和特效样式 */
+
+/* 全局动画变量 */
+:root {
+  --animation-fast: 0.2s;
+  --animation-normal: 0.3s;
+  --animation-slow: 0.5s;
+  --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --easing-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 页面加载动画 */
+.page-enter-active,
+.page-leave-active {
+  transition: all var(--animation-normal) var(--easing-smooth);
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* 组件过渡动画 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--animation-normal) var(--easing-smooth);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all var(--animation-normal) var(--easing-smooth);
+}
+
+.slide-up-enter-from,
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.scale-enter-active,
+.scale-leave-active {
+  transition: all var(--animation-normal) var(--easing-bounce);
+}
+
+.scale-enter-from,
+.scale-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+/* 棋子放置动画序列 */
+@keyframes stonePlaceSequence {
+  0% {
+    transform: translateY(-200px) scale(0.3) rotate(720deg);
+    opacity: 0;
+    filter: blur(5px);
+  }
+  20% {
+    opacity: 0.6;
+    filter: blur(2px);
+  }
+  50% {
+    transform: translateY(20px) scale(1.2) rotate(360deg);
+    opacity: 0.9;
+    filter: blur(1px);
+  }
+  70% {
+    transform: translateY(-10px) scale(0.9) rotate(180deg);
+    filter: blur(0px);
+  }
+  85% {
+    transform: translateY(5px) scale(1.05) rotate(90deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+.chess-stone--dropping {
+  animation: stonePlaceSequence 0.8s var(--easing-bounce) forwards;
+}
+
+/* 获胜庆祝动画 */
+@keyframes celebration {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(3deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(-3deg);
+  }
+  75% {
+    transform: scale(1.08) rotate(2deg);
+  }
+}
+
+.celebration-animation {
+  animation: celebration 0.6s var(--easing-bounce) infinite;
+}
+
+/* 粒子效果 */
+.particle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #ffd700 0%, #ffed4e 50%, transparent 100%);
+  border-radius: 50%;
+  animation: particleFloat 3s linear infinite;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(var(--drift, 0px)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 连击效果 */
+.combo-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff6b35;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: comboPopup 1s var(--easing-elastic) forwards;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+@keyframes comboPopup {
+  0% {
+    transform: translate(-50%, -50%) scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+/* 波纹效果 */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple-effect:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* 脉冲呼吸效果 */
+.pulse-breathing {
+  animation: pulseBreath 2s ease-in-out infinite;
+}
+
+@keyframes pulseBreath {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+/* 闪烁效果 */
+.blink-effect {
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* 摇摆效果 */
+.shake-effect {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+/* 弹跳效果 */
+.bounce-effect {
+  animation: bounce 1s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40%, 43% {
+    transform: translateY(-20px);
+  }
+  70% {
+    transform: translateY(-10px);
+  }
+  90% {
+    transform: translateY(-4px);
+  }
+}
+
+/* 旋转加载效果 */
+.spin-loader {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 进度条动画 */
+.progress-bar {
+  position: relative;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50, #66BB6A, #4CAF50);
+  background-size: 200% 100%;
+  border-radius: 10px;
+  animation: progressShine 2s linear infinite;
+  transition: width 0.3s ease;
+}
+
+@keyframes progressShine {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 悬浮卡片效果 */
+.floating-card {
+  transform: translateY(0);
+  transition: all var(--animation-normal) var(--easing-smooth);
+}
+
+.floating-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* 打字机效果 */
+.typewriter {
+  overflow: hidden;
+  border-right: 3px solid #333;
+  white-space: nowrap;
+  animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #333;
+  }
+}
+
+/* 渐变文字效果 */
+.gradient-text {
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 响应式动画 */
+@media (max-width: 768px) {
+  :root {
+    --animation-fast: 0.15s;
+    --animation-normal: 0.2s;
+    --animation-slow: 0.3s;
+  }
+  
+  .chess-stone--dropping {
+    animation-duration: 0.6s;
+  }
+  
+  .floating-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .floating-card:hover {
+    transform: none;
+  }
+  
+  .pulse-breathing,
+  .blink-effect,
+  .celebration-animation {
+    animation: none;
+  }
+}
