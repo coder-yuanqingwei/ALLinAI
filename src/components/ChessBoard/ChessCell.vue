@@ -310,7 +310,20 @@ const handleMouseLeave = () => {
 }
 
 .chess-stone--white .stone-body {
-  background: radial-gradient(circle at 30% 30%, #fff 0%, #e0e0e0 70%);
+  background: 
+    radial-gradient(circle at 30% 30%, #ffffff 0%, #f8f8f8 40%, #f0f0f0 70%, #e8e8e8 100%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%, rgba(0, 0, 0, 0.05) 100%);
+  border: 2px solid #ffffff;
+  box-shadow: 
+    /* 双层边框系统 */
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+    inset 0 0 0 3px rgba(0, 0, 0, 0.1),
+    /* 主阴影 */
+    2px 3px 6px rgba(0, 0, 0, 0.4),
+    /* 辅助阴影 */
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    /* 环境阴影 */
+    0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .chess-stone--animated {
@@ -348,8 +361,17 @@ const handleMouseLeave = () => {
 }
 
 .chess-preview--white {
-  background: radial-gradient(circle at 30% 30%, #fff 0%, #e0e0e0 70%);
-  border: 2px solid rgba(0, 0, 0, 0.3);
+  background: 
+    radial-gradient(circle at 30% 30%, #ffffff 0%, #f8f8f8 40%, #f0f0f0 70%, #e8e8e8 100%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%, rgba(0, 0, 0, 0.03) 100%);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    /* 边框效果 */
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.1),
+    /* 阴影效果 */
+    2px 2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* 获胜高亮 */
@@ -420,6 +442,23 @@ const handleMouseLeave = () => {
     height: 90%;
   }
   
+  .chess-stone--white .stone-body {
+    box-shadow: 
+      /* 简化边框 */
+      inset 0 0 0 1px rgba(255, 255, 255, 0.8),
+      inset 0 0 0 2px rgba(0, 0, 0, 0.1),
+      /* 适配阴影强度 */
+      2px 2px 4px rgba(0, 0, 0, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.25),
+      0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .chess-preview--white {
+    box-shadow: 
+      inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+      1px 1px 2px rgba(0, 0, 0, 0.25);
+  }
+  
   .star-point {
     width: 6px;
     height: 6px;
@@ -428,6 +467,16 @@ const handleMouseLeave = () => {
   .last-move-marker {
     width: 25%;
     height: 25%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chess-stone--white .stone-body {
+    box-shadow: 
+      /* 进一步简化 */
+      inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+      1px 2px 3px rgba(0, 0, 0, 0.3),
+      0 4px 8px rgba(0, 0, 0, 0.12);
   }
 }
 </style>
